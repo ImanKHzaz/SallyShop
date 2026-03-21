@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>الصفحة الرئيسية - SallyShop</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet" integrity="sha384-z0Y/6hr0fDQi1H+yKgnWojH3O8NQ8twNnYQxJGl+CHQvy+R2AhwV/8wZY1xtz8KP" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet"
+        integrity="sha384-z0Y/6hr0fDQi1H+yKgnWojH3O8NQ8twNnYQxJGl+CHQvy+R2AhwV/8wZY1xtz8KP" crossorigin="anonymous">
     <style>
         body {
             background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
             min-height: 100vh;
         }
+
         .hero {
             background: rgba(255, 255, 255, .9);
             border-radius: 28px;
-            box-shadow: 0 16px 40px rgba(0,0,0,.12);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, .12);
         }
+
         .card-shadow {
-            box-shadow: 0 8px 20px rgba(0,0,0,.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
             border: none;
         }
+
         .btn-primary {
             background: #0d6efd;
             border: 1px solid #0d6efd;
         }
+
         .btn-primary:hover {
             background: #0b5ed7;
             border-color: #0b5ed7;
         }
     </style>
 </head>
+
 <body>
     <div class="container py-5">
         <header class="hero p-5 mb-5 text-center">
@@ -65,7 +72,8 @@
         <section id="products" class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
                 <div class="card card-shadow h-100">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80" class="card-img-top" alt="منتج 1">
+                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80"
+                        class="card-img-top" alt="منتج 1">
                     <div class="card-body">
                         <h5 class="card-title">منتج مميز 1</h5>
                         <p class="card-text">سعر ممتاز، جودة عالية، وتوصيل سريع إلى باب منزلك.</p>
@@ -75,7 +83,8 @@
             </div>
             <div class="col">
                 <div class="card card-shadow h-100">
-                    <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=700&q=80" class="card-img-top" alt="منتج 2">
+                    <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=700&q=80"
+                        class="card-img-top" alt="منتج 2">
                     <div class="card-body">
                         <h5 class="card-title">منتج مميز 2</h5>
                         <p class="card-text">تصميم عصري، ومواصفات تناسب الاستخدام اليومي والاحترافي.</p>
@@ -85,7 +94,8 @@
             </div>
             <div class="col">
                 <div class="card card-shadow h-100">
-                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=80" class="card-img-top" alt="منتج 3">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=700&q=80"
+                        class="card-img-top" alt="منتج 3">
                     <div class="card-body">
                         <h5 class="card-title">منتج مميز 3</h5>
                         <p class="card-text">مثالي للأعمال والأنشطة اليومية. مع دعم فني متميز بعد الشراء.</p>
@@ -100,6 +110,9 @@
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-0EVHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-0EVHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    </script>
 </body>
+
 </html>
