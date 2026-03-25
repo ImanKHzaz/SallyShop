@@ -130,6 +130,36 @@
                         <a class="nav-link" href="{{ route('orders.index') }}"><i
                                 class="fas fa-receipt me-1"></i>الطلبات</a>
                     </li>
+
+                    @auth
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle me-1"></i>{{ Auth::user()->name }}
+                                <span class="badge bg-info text-dark ms-1">{{ Auth::user()->role }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user me-1"></i>الملف الشخصي</a>
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}" class="m-0">
+                                        @csrf
+                                        <button class="dropdown-item" type="submit"><i
+                                                class="fas fa-sign-out-alt me-1"></i>تسجيل خروج</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt me-1"></i>تسجيل
+                                دخول</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}"><i class="fas fa-user-plus me-1"></i>تسجيل
+                                حساب</a>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>

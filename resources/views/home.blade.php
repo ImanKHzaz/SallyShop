@@ -6,6 +6,30 @@
     <div class="hero-section text-center text-white">
         <h1 class="display-4 fw-bold mb-3"><i class="fas fa-star me-2"></i>مرحبا بك في SallyShop</h1>
         <p class="lead mb-4">متجرك الإلكتروني العربي مع تجربة مستخدم مميزة وسهلة التنقل.</p>
+
+        @auth
+            <div class="mb-4">
+                <p class="lead">أنت مسجل دخول كـ <span class="badge bg-light text-dark">{{ Auth::user()->role }}</span></p>
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                    <a href="{{ route('products.index') }}" class="btn btn-light btn-lg text-primary"><i
+                            class="fas fa-box me-2"></i>المنتجات</a>
+                    <a href="{{ route('categories.index') }}" class="btn btn-light btn-lg text-success"><i
+                            class="fas fa-tags me-2"></i>الفئات</a>
+                    <a href="{{ route('carts.index') }}" class="btn btn-light btn-lg text-warning"><i
+                            class="fas fa-shopping-cart me-2"></i>السلات</a>
+                    <a href="{{ route('orders.index') }}" class="btn btn-light btn-lg text-info"><i
+                            class="fas fa-receipt me-2"></i>الطلبات</a>
+                </div>
+            </div>
+        @else
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="{{ route('login') }}" class="btn btn-light btn-lg text-primary"><i
+                        class="fas fa-sign-in-alt me-2"></i>تسجيل دخول</a>
+                <a href="{{ route('register') }}" class="btn btn-light btn-lg text-success"><i
+                        class="fas fa-user-plus me-2"></i>تسجيل حساب</a>
+            </div>
+        @endauth
+
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             <a href="#products" class="btn btn-primary btn-lg"><i class="fas fa-shopping-bag me-2"></i>تسوق الآن</a>
             <a href="#features" class="btn btn-secondary btn-lg"><i class="fas fa-info-circle me-2"></i>استكشف المميزات</a>
@@ -75,7 +99,8 @@
         </div>
         @if (\App\Models\Product::count() > 6)
             <div class="text-center mt-4">
-                <a href="{{ route('products.index') }}" class="btn btn-secondary btn-lg"><i class="fas fa-list me-2"></i>عرض
+                <a href="{{ route('products.index') }}" class="btn btn-secondary btn-lg"><i
+                        class="fas fa-list me-2"></i>عرض
                     جميع المنتجات</a>
             </div>
         @endif
