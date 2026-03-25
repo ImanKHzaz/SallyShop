@@ -43,8 +43,12 @@ class User extends Authenticatable
         return $this->role === self::ROLE_USER;
     }
 
-    public function hasAnyRole(array $roles): bool
+    public function hasAnyRole($roles): bool
     {
+        if (is_string($roles)) {
+            return $this->role === $roles;
+        }
+
         return in_array($this->role, $roles, true);
     }
 
