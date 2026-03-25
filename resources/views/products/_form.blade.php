@@ -5,6 +5,18 @@
 </div>
 
 <div class="mb-3">
+    <label for="category_id" class="form-label">الفئة</label>
+    <select name="category_id" id="category_id" class="form-select">
+        <option value="">-- بدون فئة --</option>
+        @foreach ($categories as $category)
+            <option value="{{ $category->id }}"
+                {{ old('category_id', $product->category_id ?? '') == $category->id ? 'selected' : '' }}>
+                {{ $category->name }}</option>
+        @endforeach
+    </select>
+</div>
+
+<div class="mb-3">
     <label for="description" class="form-label">الوصف</label>
     <textarea class="form-control" id="description" name="description" rows="4">{{ old('description', $product->description ?? '') }}</textarea>
 </div>

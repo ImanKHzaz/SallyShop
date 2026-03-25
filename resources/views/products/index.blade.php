@@ -27,6 +27,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>الاسم</th>
+                                <th>الفئة</th>
                                 <th>الوصف</th>
                                 <th>السعر</th>
                                 <th>الكمية</th>
@@ -37,7 +38,7 @@
                             @forelse($products as $product)
                                 <tr>
                                     <td>{{ $product->id }}</td>
-                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->category?->name ?? '-' }}</td>
                                     <td>{{ Str::limit($product->description, 50) }}</td>
                                     <td>{{ number_format($product->price, 2) }} ر.س</td>
                                     <td>{{ $product->quantity }}</td>
