@@ -1,36 +1,27 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>تعديل سلة - SallyShop</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet"
-        crossorigin="anonymous">
-</head>
+@section('title', 'تعديل السلة - SallyShop')
 
-<body class="bg-light">
-    <div class="container py-4">
-        <h1 class="mb-4">تعديل السلة</h1>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+@section('content')
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0">
+                <div class="card-header bg-warning text-white border-0">
+                    <h3 class="mb-0"><i class="fas fa-edit me-2"></i>تعديل السلة</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('carts.update', $cart) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        @include('carts._form')
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-warning"><i class="fas fa-refresh me-2"></i>تحديث</button>
+                            <a href="{{ route('carts.index') }}" class="btn btn-secondary"><i
+                                    class="fas fa-times me-2"></i>إلغاء</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-        @endif
-        <form method="POST" action="{{ route('carts.update', $cart) }}">
-            @csrf
-            @method('PUT')
-            @include('carts._form')
-            <button class="btn btn-warning">تحديث</button>
-            <a class="btn btn-secondary" href="{{ route('carts.index') }}">إلغاء</a>
-        </form>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+@endsection

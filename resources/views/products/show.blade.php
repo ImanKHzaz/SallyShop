@@ -1,33 +1,44 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>عرض المنتج - SallyShop</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet"
-        crossorigin="anonymous">
-</head>
+@section('title', 'عرض المنتج - SallyShop')
 
-<body class="bg-light">
-    <div class="container py-4">
-        <h1 class="mb-4">عرض المنتج</h1>
-
-        <div class="card">
-            <div class="card-body">
-                <h3>{{ $product->name }}</h3>
-                <p><strong>الوصف:</strong> {{ $product->description ?: 'لا يوجد وصف' }}</p>
-                <p><strong>السعر:</strong> {{ number_format($product->price, 2) }} ر.س</p>
-                <p><strong>الكمية:</strong> {{ $product->quantity }}</p>
-                <p><strong>تاريخ الإضافة:</strong> {{ $product->created_at->diffForHumans() }}</p>
-
-                <a href="{{ route('products.index') }}" class="btn btn-secondary">العودة</a>
-                <a href="{{ route('products.edit', $product) }}" class="btn btn-warning">تعديل</a>
+@section('content')
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0"><i class="fas fa-eye me-2"></i>عرض المنتج</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3">
+                            <i class="fas fa-box fa-5x text-primary"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="text-primary">{{ $product->name }}</h4>
+                            <hr>
+                            <p><i class="fas fa-tag me-2"></i><strong>الفئة:</strong>
+                                {{ $product->category?->name ?? 'غير مصنف' }}</p>
+                            <p><i class="fas fa-align-left me-2"></i><strong>الوصف:</strong>
+                                {{ $product->description ?: 'لا يوجد وصف' }}</p>
+                            <p><i class="fas fa-dollar-sign me-2"></i><strong>السعر:</strong> <span
+                                    class="text-success fw-bold">{{ number_format($product->price, 2) }} ر.س</span></p>
+                            <p><i class="fas fa-cubes me-2"></i><strong>الكمية:</strong> {{ $product->quantity }}</p>
+                            <p><i class="fas fa-calendar me-2"></i><strong>تاريخ الإضافة:</strong>
+                                {{ $product->created_at->format('Y-m-d H:i') }}</p>
+                            <p><i class="fas fa-clock me-2"></i><strong>منذ:</strong>
+                                {{ $product->created_at->diffForHumans() }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('products.index') }}" class="btn btn-secondary"><i
+                                class="fas fa-arrow-left me-2"></i>العودة للقائمة</a>
+                        <a href="{{ route('products.edit', $product) }}" class="btn btn-warning"><i
+                                class="fas fa-edit me-2"></i>تعديل</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+@endsection

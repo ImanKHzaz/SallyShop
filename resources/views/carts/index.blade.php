@@ -1,60 +1,76 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>السلات - SallyShop</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" rel="stylesheet"
-        crossorigin="anonymous">
-</head>
+@section('title', 'إدارة السلات - SallyShop')
 
-<body class="bg-light">
-    <div class="container py-4">
-        <h1 class="mb-4">السلات</h1>
+@section('content')
+    <h1 class="mb-4 text-center"><i class="fas fa-shopping-cart me-2"></i>إدارة السلات</h1>
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{{ route('carts.create') }}" class="btn btn-primary"><i class="fas fa-plus me-2"></i>إنشاء سلة جديدة</a>
+        <a href="{{ route('home') }}" class="btn btn-secondary"><i class="fas fa-home me-2"></i>الصفحة الرئيسية</a>
+    </div>
 
-        <a href="{{ route('carts.create') }}" class="btn btn-primary mb-3">إنشاء سلة جديدة</a>
+    <div class="card border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th><i class="fas fa-hashtag"></i></th>
+                            <th><i class="fas fa-ring"></i> الحالة</th>
+                            <th><i class="fas fa-user"></i> المستخدم</th>
+                            <th><i class="fas fa-list"></i> عدد العناصر</th>
+                            <th><i class="fas fa-calendar"></i> تاريخ الإنشاء</th>
+                            <th><i class="fas fa-cogs"></i> الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($carts as $cart)
+                            <tr>
+                                <td>{{ $cart->id }}</td>
+                                <td>
+                                    <span
+                                        class="badge
+                                    {{ $cart->status === 'active' ? 'bg-success' : ($cart->status === 'ordered' ? 'bg-info' : 'bg-warning') }}">
+                                        {{ $cart->status }}
+                                    </span>
+                                </td>
+                                <td>{{ $cart->user?->name ?? 'لا يوجد' }}</td>
+                                <td><span class="badge bg-secondary">{{ $cart->items->count() }}</span></td>
+                                <td>{{ $cart->created_at->format('Y-m-d H:i') }}</td>
+                                <td>
+                                    <a href="{{ route('carts.show', $cart) }}" class="btn btn-sm btn-info" title="عرض">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('carts.edit', $cart) }}" class="btn btn-sm btn-warning me-1"
+                                        title="تعديل">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('carts.destroy', $cart) }}" method="POST" class="d-inline"
+                                        onsubmit="return confirm('هل أنت متأكد من حذف هذه السلة؟');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger" title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                    <p class="mb-0">لا توجد سلات حتى الآن</p>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>الحالة</th>
-                    <th>المستخدم</th>
-                    <th>اجراءات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($carts as $cart)
-                    <tr>
-                        <td>{{ $cart->id }}</td>
-                        <td>{{ $cart->status }}</td>
-                        <td>{{ $cart->user?->name ?? '-' }}</td>
-                        <td>
-                            <a href="{{ route('carts.show', $cart) }}" class="btn btn-info btn-sm">عرض</a>
-                            <a href="{{ route('carts.edit', $cart) }}" class="btn btn-warning btn-sm">تعديل</a>
-                            <form action="{{ route('carts.destroy', $cart) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('هل تريد حذف هذه السلة؟');">
-                                @csrf @method('DELETE')
-                                <button class="btn btn-danger btn-sm">حذف</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="text-center">لا توجد سلات</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <div class="mt-4 d-flex justify-content-center">
         {{ $carts->links() }}
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+@endsection
