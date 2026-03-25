@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Cart;
+use App\Models\OrderItem;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,4 +35,3 @@ class Order extends Model
         return $this->belongsTo(Cart::class);
     }
 }
-

@@ -2,63 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $carts = Cart::latest()->paginate(12);
+        return view('carts.index', compact('carts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('carts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'user_id' => 'nullable|exists:users,id',
+            'status' => 'required|in:active,ordered,abandoned',
+        ]);
+
+        Cart::create($data);
+
+        return redirect()->route('carts.index')->with('success', 'تم إنشاء السلة بنجاح');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Cart $cart)
     {
-        //
+        return view('carts.show', compact('cart'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Cart $cart)
     {
-        //
+        return view('carts.edit', compact('cart'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Cart $cart)
     {
-        //
+        $data = $request->validate([
+            'user_id' => 'nullable|exists:users,id',
+            'status' => 'required|in:active,ordered,abandoned',
+        ]);
+
+        $cart->update($data);
+
+        return redirect()->route('carts.index')->with('success', 'تم تحديث السلة بنجاح');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Cart $cart)
     {
-        //
+        $cart->delete();
+        return redirect()->route('carts.index')->with('success', 'تم حذف السلة بنجاح');
     }
 }
