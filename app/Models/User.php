@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+/** @property \Illuminate\Database\Eloquent\Collection $orders */
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
