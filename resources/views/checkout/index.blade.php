@@ -57,6 +57,7 @@
                                         <option value="+962">🇯🇴 +962 (الأردن)</option>
                                         <option value="+961">🇱🇧 +961 (لبنان)</option>
                                         <option value="+970">🇵🇸 +970 (فلسطين)</option>
+                                        <option value="+963">🇸🇾 +963 (سوريا)</option>
                                         <option value="+20">🇪🇬 +20 (مصر)</option>
                                     </select>
                                     <input type="number" name="phone_number" class="form-control"
@@ -73,7 +74,25 @@
                                 @enderror
                             </div>
 
-                            <!-- ملخص المنتجات -->
+                            <!-- عنوان التسليم -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold"><i
+                                        class="fas fa-map-marker-alt me-2 text-danger"></i>عنوان
+                                    التسليم</label>
+                                <div class="input-group">
+                                    <textarea name="shipping_address" class="form-control" rows="3"
+                                        placeholder="أدخل عنوان التسليم الكامل (الشارع، المدينة، المنطقة، إلخ)" required></textarea>
+                                    <button type="button" class="btn btn-outline-primary" id="getLocationBtn">
+                                        <i class="fas fa-location-arrow me-1"></i>مشاركة الموقع
+                                    </button>
+                                </div>
+                                <small class="text-muted d-block mt-2">
+                                    <i class="fas fa-info-circle me-1"></i>يمكنك إدخال العنوان يدويًا أو مشاركة موقعك الحالي
+                                </small>
+                                @error('shipping_address')
+                                    <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="mb-4">
                                 <label class="form-label fw-bold"><i class="fas fa-list me-2 text-info"></i>المنتجات
                                     المطلوبة</label>
@@ -142,4 +161,48 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript لمشاركة الموقع -->
+    <script>
+        document.getElementById('getLocationBtn').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>جاري الحصول على الموقع...';
+                this.disabled = true;
+
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // استخدام API للحصول على العنوان من الإحداثيات (مثال بسيط)
+                    fetch(
+                            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=ar`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const address = `${data.city}, ${data.locality}, ${data.countryName}`;
+                            document.querySelector('textarea[name="shipping_address"]').value = address;
+                            document.getElementById('getLocationBtn').innerHTML =
+                                '<i class="fas fa-check me-1"></i>تم الحصول على الموقع';
+                            document.getElementById('getLocationBtn').classList.remove(
+                                'btn-outline-primary');
+                            document.getElementById('getLocationBtn').classList.add('btn-success');
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('حدث خطأ في الحصول على العنوان. يرجى إدخاله يدويًا.');
+                            document.getElementById('getLocationBtn').innerHTML =
+                                '<i class="fas fa-location-arrow me-1"></i>مشاركة الموقع';
+                            document.getElementById('getLocationBtn').disabled = false;
+                        });
+                }, function(error) {
+                    console.error('Error:', error);
+                    alert('لم يتم السماح بالوصول إلى الموقع. يرجى إدخال العنوان يدويًا.');
+                    document.getElementById('getLocationBtn').innerHTML =
+                        '<i class="fas fa-location-arrow me-1"></i>مشاركة الموقع';
+                    document.getElementById('getLocationBtn').disabled = false;
+                });
+            } else {
+                alert('المتصفح لا يدعم مشاركة الموقع.');
+            }
+        });
+    </script>
 @endsection

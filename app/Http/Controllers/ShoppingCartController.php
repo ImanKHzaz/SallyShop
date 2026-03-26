@@ -106,19 +106,22 @@ class ShoppingCartController extends Controller
         $validated = $request->validate([
             'payment_method' => ['required', 'in:sham_cash,cod'],
             'phone_number' => ['required', 'regex:/^\d{9,15}$/'],
-            'country_code' => ['required', 'in:+966,+971,+962,+961,+970,+20'],
+            'country_code' => ['required', 'in:+966,+971,+962,+961,+970,+20,+963'],
+            'shipping_address' => ['required', 'string', 'min:10'],
         ], [
             'payment_method.required' => 'يضرور اختيار طريقة دفع.',
             'phone_number.required' => 'رقم الهاتف مطلوب.',
             'phone_number.regex' => 'رقم الهاتف يجب أن يكون بين 9 و 15 رقم.',
             'country_code.required' => 'رمز الدولة مطلوب.',
             'country_code.in' => 'رمز الدولة غير صحيح.',
+            'shipping_address.required' => 'عنوان التسليم مطلوب.',
+            'shipping_address.min' => 'عنوان التسليم يجب أن يكون على الأقل 10 أحرف.',
         ]);
 
         $user = Auth::user();
         $cart = Cart::where('user_id', $user->id)
             ->where('status', 'active')
-            ->with('items')
+            ->with('items.product')
             ->first();
 
         if (!$cart || $cart->items->isEmpty()) {
@@ -132,7 +135,7 @@ class ShoppingCartController extends Controller
             'cart_id' => $cart->id,
             'status' => 'pending',
             'total' => $total,
-            'shipping_address' => $user->address ?? 'لم يتم تحديد عنوان',
+            'shipping_address' => $validated['shipping_address'],
             'payment_method' => $validated['payment_method'],
             'phone_number' => $validated['phone_number'],
             'country_code' => $validated['country_code'],
