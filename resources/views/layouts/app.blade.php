@@ -131,6 +131,13 @@
                                 class="fas fa-receipt me-1"></i>الطلبات</a>
                     </li>
 
+                    @if (auth()->check() && in_array(auth()->user()->role, ['admin', 'assistant']))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}"><i
+                                    class="fas fa-tachometer-alt me-1"></i>لوحة التحكم</a>
+                        </li>
+                    @endif
+
                     @auth
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"

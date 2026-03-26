@@ -48,6 +48,18 @@ Route::resource('categories', CategoryController::class)->only(['index', 'show']
 Route::resource('carts', CartController::class)->only(['index', 'show']);
 Route::resource('orders', OrderController::class)->only(['index', 'show']);
 
+// لوحة التحكم للإدارة والمساعدين
+Route::middleware(['auth', 'role:admin,assistant'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
+
+    Route::resource('orders', OrderController::class)->except(['create', 'store']);
+    Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('users', \App\Http\Controllers\UserController::class);
+});
+
 Route::middleware(['auth', 'role:admin,assistant'])->group(function () {
     Route::resource('products', ProductController::class)->except(['index', 'show']);
     Route::resource('categories', CategoryController::class)->except(['index', 'show']);

@@ -11,7 +11,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with('user')->latest()->paginate(12);
-        return view('orders.index', compact('orders'));
+        return view('admin.orders.index', compact('orders'));
     }
 
     public function create()
@@ -36,14 +36,14 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $order->load('user');
-        return view('orders.show', compact('order'));
+        $order->load('user', 'items.product');
+        return view('admin.orders.show', compact('order'));
     }
 
     public function edit(Order $order)
     {
-        $order->load('user');
-        return view('orders.edit', compact('order'));
+        $order->load('user', 'items.product');
+        return view('admin.orders.edit', compact('order'));
     }
 
     public function update(Request $request, Order $order)
