@@ -18,6 +18,10 @@ class Order extends Model
         'status',
         'total',
         'shipping_address',
+        'payment_method',
+        'phone_number',
+        'country_code',
+        'payment_status',
     ];
 
     public function items()

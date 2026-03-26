@@ -31,11 +31,27 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="d-flex gap-2">
+                    <div class="d-flex gap-2 flex-wrap">
                         <a href="{{ route('products.index') }}" class="btn btn-secondary"><i
                                 class="fas fa-arrow-left me-2"></i>العودة للقائمة</a>
-                        <a href="{{ route('products.edit', $product) }}" class="btn btn-warning"><i
-                                class="fas fa-edit me-2"></i>تعديل</a>
+                        @auth
+                            @if ($product->quantity > 0)
+                                <form action="{{ route('cart.add', $product) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success"><i
+                                            class="fas fa-shopping-cart me-2"></i>إضافة للسلة</button>
+                                </form>
+                            @else
+                                <button class="btn btn-danger" disabled><i class="fas fa-ban me-2"></i>غير متوفر</button>
+                            @endif
+                            @if (auth()->user()->isAdmin() || auth()->user()->isAssistant())
+                                <a href="{{ route('products.edit', $product) }}" class="btn btn-warning"><i
+                                        class="fas fa-edit me-2"></i>تعديل</a>
+                            @endif
+                        @else
+                            <a href="{{ route('login') }}" class="btn btn-primary"><i class="fas fa-sign-in-alt me-2"></i>تسجيل
+                                دخول للشراء</a>
+                        @endauth
                     </div>
                 </div>
             </div>

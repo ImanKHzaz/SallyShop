@@ -53,6 +53,22 @@ class User extends Authenticatable
     }
 
     /**
+     * علاقة المستخدم مع السلات
+     */
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    /**
+     * علاقة المستخدم مع الطلبات
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
