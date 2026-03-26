@@ -154,6 +154,10 @@ class ShoppingCartController extends Controller
         // تحديث حالة السلة
         $cart->update(['status' => 'ordered']);
 
+        // إرسال رسالة واتس لإشعار المستخدم بإنشاء الطلب
+        $whatsAppService = new \App\Services\WhatsAppService();
+        $whatsAppService->sendOrderStatusUpdate($order);
+
         return redirect()->route('order.confirmation', $order)
             ->with('success', 'تم إنشاء الطلب بنجاح!');
     }
